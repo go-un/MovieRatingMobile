@@ -5,7 +5,7 @@ export default function MovieList() {
   const [movies, setMovies] = useState([]);
 
   useEffect( () => {
-    fetch(`http://127.0.0.1:8000/api/movies/`, {
+    fetch(`http://192.168.25.42:8000/api/movies/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token 47ec21484323984a72b5d949c0981db5afa713d8`
