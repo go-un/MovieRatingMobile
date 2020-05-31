@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { FlatList, Text, View } from 'react-native';
 
-export default function MovieList() {
+export default function MovieList(props) {
   const [movies, setMovies] = useState([]);
+  let state = {
+    token: '47ec21484323984a72b5d949c0981db5afa713d8'
+  }
 
   useEffect( () => {
-    fetch(`http://192.168.25.42:8000/api/movies/`, {
+    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/`, {
       method: 'GET',
       headers: {
-        'Authorization': `Token 47ec21484323984a72b5d949c0981db5afa713d8`
+        'Authorization': `Token ${state.token}`
       }
     })
     .then( response => response.json())
@@ -19,6 +22,7 @@ export default function MovieList() {
   return (
     <View>
       <Text>Movie List</Text>
+      {console.log("???:", process.env.REACT_NATIVE_API_URL)}
       <FlatList 
         data={movies}
         renderItem={({item}) => (
