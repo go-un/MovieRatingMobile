@@ -22,7 +22,6 @@ export default function MovieList(props) {
   return (
     <View>
       <Text>Movie List</Text>
-      {console.log("???:", process.env.REACT_NATIVE_API_URL)}
       <FlatList 
         data={movies}
         renderItem={({item}) => (
