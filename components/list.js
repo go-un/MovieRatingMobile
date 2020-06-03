@@ -8,7 +8,7 @@ export default function MovieList(props) {
   }
 
   useEffect( () => {
-    fetch(`${process.env.OFFICE_REACT_NATIVE_API_URL}/api/movies/`, {
+    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${state.token}`
