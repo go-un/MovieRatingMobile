@@ -1,21 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import MovieList from './components/list'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import MovieList from './components/list';
+import MovieDetail from './components/detail';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <MovieList />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AppNavigator = createStackNavigator({
+  MovieList: {
+    screen: MovieList,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Movie List 🎬'
+    })
   },
+  Detail: {
+    screen: MovieDetail,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: ''
+    })
+  }
 });
+
+const App = createAppContainer(AppNavigator);
+
+export default App;
