@@ -8,7 +8,7 @@ export default function MovieList(props) {
   }
 
   useEffect( () => {
-    fetch(`${process.env.OFFICE_REACT_NATIVE_API_URL}/api/movies/`, {
+    fetch(`${process.env.STARBUCKS_REACT_NATIVE_API_URL}/api/movies/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${state.token}`
@@ -25,7 +25,7 @@ export default function MovieList(props) {
       <FlatList 
         data={movies}
         style={styles.movie_list}
-        numColumns={2}
+        numColumns={3}
         renderItem={({item}) => (
           <View style={styles.movie_list_item}>
             <ImageBackground style={styles.image_background_type1} source={'//via.placeholder.com/500x500'}>
@@ -45,14 +45,20 @@ export default function MovieList(props) {
 const styles = StyleSheet.create({
   movie_list_box: {
     width: '100%',
-    backgroundColor: 'pink',
+    backgroundColor: 'orange',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   movie_list: {
-    padding: '3px'
+    width: '100%',
+    maxWidth: '1100px',
+    padding: '6px',
+    flexWrap: 'wrap'
   },
   movie_list_item: {
-    width: '50%',
-    padding: '3px'
+    width: '33.3%',
+    padding: '6px'
   },
   movie_list_textbox: {
     backgroundColor: 'rgba(0,0,0,0.4)',
@@ -60,7 +66,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '0',
     left: '0',
-    width: '100%'
+    width: '100%',
+    maxHeight: '50%',
+    overflowY: 'auto'
   },
   image_background_type1: {
     paddingTop: '100%',
