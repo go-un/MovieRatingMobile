@@ -7,6 +7,18 @@ export default function MovieDetail(props) {
 
   const movie = props.navigation.getParam('movie', null);
 
+  MovieDetail.navigationOptions = screenProps => ({
+    title: screenProps.navigation.getParam('title'),
+    headerStyle: {
+      backgroundColor: 'darkolivegreen'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 24
+    }
+  })
+
   return (
     <View style={styles.movie_detail_box}>
       <Text style={styles.text_title_type1}>{movie.title}</Text>

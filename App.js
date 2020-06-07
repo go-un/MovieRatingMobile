@@ -7,16 +7,10 @@ import MovieDetail from './components/detail';
 
 const AppNavigator = createStackNavigator({
   MovieList: {
-    screen: MovieList,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Movie List 🎬'
-    })
+    screen: MovieList
   },
   Detail: {
-    screen: MovieDetail,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: ''
-    })
+    screen: MovieDetail
   }
 });
 

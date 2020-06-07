@@ -3,6 +3,7 @@ import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native
 
 export default function MovieList(props) {
   const [movies, setMovies] = useState([]);
+  
   let state = {
     token: '47ec21484323984a72b5d949c0981db5afa713d8'
   }
@@ -20,8 +21,20 @@ export default function MovieList(props) {
   }, []);
 
   const movieClicked = movie => {
-    props.navigation.navigate("Detail", {movie: movie})
+    props.navigation.navigate("Detail", {movie: movie, title: movie.title})
   }
+
+  MovieList.navigationOptions = () => ({
+    title: 'Movie List 🎬',
+    headerStyle: {
+      backgroundColor: 'darkolivegreen'
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 24
+    }
+  })
 
   return (
     <View style={styles.movie_list_box}>
@@ -55,6 +68,9 @@ const styles = StyleSheet.create({
   },
   movie_list_item: {
     padding: '2%'
-
+  },
+  text_title_type1: {
+    fontSize: 16,
+    color: '#fff'
   }
 });
