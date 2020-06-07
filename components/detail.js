@@ -1,38 +1,45 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
-export default function MovieDetail(props) {
-
-  const movie = props.navigation.getParam('movie', null);
-
-  MovieDetail.navigationOptions = screenProps => ({
-    title: screenProps.navigation.getParam('title'),
-    headerStyle: {
-      backgroundColor: 'darkolivegreen'
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      fontSize: 24
+export default class MovieDetail extends Component {
+  constructor(props){
+    super(props);
+    this.movie = props.navigation.getParam('movie', null);
+    this.navigation = props.navigation;
+    this.state = {
+      title: this.movie.title,
+      description: this.movie.description,
+      token: '47ec21484323984a72b5d949c0981db5afa713d8'
     }
-  })
+  }
 
-  return (
-    <View style={styles.movie_detail_box}>
-      <Text style={styles.text_title_type1}>{movie.title}</Text>
-      <View style={styles.rating_box}>
-        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 0 ? styles.orange : styles.white } />
-        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 1 ? styles.orange : styles.white } />
-        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 2 ? styles.orange : styles.white } />
-        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 3 ? styles.orange : styles.white } />
-        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 4 ? styles.orange : styles.white } />
-        <Text>({movie.no_of_ratings})</Text>
+  editClicked = () => {
+    this.navigation.navigate("Edit", {movie: this.movie, updateMovie: this.updateMovie})
+  }
+
+  updateMovie = movie => {
+    this.setState({title: movie.title, description: movie.description});
+  }
+
+  render() {
+    return (
+      <View style={styles.movie_detail_box}>
+        <Text style={styles.text_title_type1}>{this.movie.title}</Text>
+        <View style={styles.rating_box}>
+          <FontAwesomeIcon icon={ faStar } style={ this.movie.avg_ratings > 0 ? styles.orange : styles.white } />
+          <FontAwesomeIcon icon={ faStar } style={ this.movie.avg_ratings > 1 ? styles.orange : styles.white } />
+          <FontAwesomeIcon icon={ faStar } style={ this.movie.avg_ratings > 2 ? styles.orange : styles.white } />
+          <FontAwesomeIcon icon={ faStar } style={ this.movie.avg_ratings > 3 ? styles.orange : styles.white } />
+          <FontAwesomeIcon icon={ faStar } style={ this.movie.avg_ratings > 4 ? styles.orange : styles.white } />
+          <Text>({this.movie.no_of_ratings})</Text>
+        </View>
+        <Text style={styles.text_description_type1}>{this.movie.description}</Text>
+        <Button title="Edit" onPress={() => this.editClicked(this.movie) } />
       </View>
-      <Text style={styles.text_description_type1}>{movie.description}</Text>
-    </View>
-  )
+    )
+  }
 }
 
 const styles = StyleSheet.create({
