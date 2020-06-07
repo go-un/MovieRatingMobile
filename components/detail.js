@@ -11,11 +11,12 @@ export default function MovieDetail(props) {
     <View style={styles.movie_detail_box}>
       <Text style={styles.text_title_type1}>{movie.title}</Text>
       <View style={styles.rating_box}>
-        <FontAwesomeIcon icon={ faStar } />
-        <FontAwesomeIcon icon={ faStar } />
-        <FontAwesomeIcon icon={ faStar } />
-        <FontAwesomeIcon icon={ faStar } />
-        <FontAwesomeIcon icon={ faStar } />
+        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 0 ? styles.orange : styles.white } />
+        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 1 ? styles.orange : styles.white } />
+        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 2 ? styles.orange : styles.white } />
+        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 3 ? styles.orange : styles.white } />
+        <FontAwesomeIcon icon={ faStar } style={ movie.avg_ratings > 4 ? styles.orange : styles.white } />
+        <Text>({movie.no_of_ratings})</Text>
       </View>
       <Text style={styles.text_description_type1}>{movie.description}</Text>
     </View>
@@ -41,5 +42,11 @@ const styles = StyleSheet.create({
   text_description_type1: {
     fontSize: 16,
     color: '#fff'
+  },
+  orange: {
+    color: 'orange'
+  },
+  white: {
+    color: 'white'
   }
 });
