@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, StyleSheet, TouchableOpacity, Button } from 'react-native';
 
 export default class MovieList extends Component {
   constructor(props){
@@ -10,6 +10,18 @@ export default class MovieList extends Component {
       token: '47ec21484323984a72b5d949c0981db5afa713d8'
     }
   }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Moive List',
+      headerRight: () => (
+        <Button
+          onPress={() => navigation.navigate('Add')}
+          title="New"
+        />
+      ),
+    };
+  };
 
   componentDidMount() {
     fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/`, {
@@ -31,7 +43,7 @@ export default class MovieList extends Component {
           style={styles.movie_list}
           renderItem={({item}) => (
             <View style={styles.movie_list_item}>
-              <TouchableOpacity onPress={() => this.navigation.navigate("Detail", {movie: item})}>
+              <TouchableOpacity onPress={() => this.navigation.navigate("Details", {movie: item, title: item.title})}>
                 <Text style={styles.text_title_type1}>{item.title}</Text>
               </TouchableOpacity>
             </View>

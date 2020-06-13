@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Button, View, Text, TextInput, StyleSheet } from 'react-native';
+import { Button, View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 
 export default class MovieEdit extends Component {
   constructor(props){
     super(props);
-
-    this.movie = props.navigation.getParam('movie', null);
     this.navigation = props.navigation;
+    this.movie = props.navigation.getParam('movie', null);
     this.state = {
       title: this.movie.title,
       description: this.movie.description,
@@ -14,6 +13,25 @@ export default class MovieEdit extends Component {
     }
   }
 
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+
+    return {
+      title: 'Edit',
+      headerRight: () => (
+        <Button
+          onPress={() => params.removeClicked(navigation.getParam('movie', null))}
+          title="Remove"
+          color="red"
+        />
+      ),
+    };
+  };
+
+  componentDidMount() {
+  this.props.navigation.setParams({ removeClicked: this.removeClicked });
+  }
+    
   saveClicked = () => {
     fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/${this.movie.id}/`, {
       method: 'PUT',
@@ -27,10 +45,26 @@ export default class MovieEdit extends Component {
       })
     })
     .then( response => response.json())
-    .then( result => console.log(result))
+    .then( result => Alert.alert("EDIT", result.message))
+    .catch( error => console.log(error));
+    
+    this.navigation.goBack();
+  }
+
+  removeClicked = movie => {
+    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/${movie.id}/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${this.state.token}`
+      }
+    })
+    .then( () => {
+      Alert.alert('DELETE', 'successfully deleted!');
+      this.navigation.navigate('List');
+    })
     .catch( error => console.log(error));
 
-    this.navigation.goBack();
   }
 
   render() {
