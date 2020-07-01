@@ -8,7 +8,7 @@ export default class MovieAdd extends Component {
     this.state = {
       title: null,
       description: null,
-      token: '47ec21484323984a72b5d949c0981db5afa713d8'
+      token: props.navigation.getParam('token', null)
     }
   }
 
@@ -20,11 +20,12 @@ export default class MovieAdd extends Component {
 
   saveClicked = () => {
     if(!this.state.title) {
-      Alert.alert("ERROR", "Type new title to save new movie");
+      console.log("ERROR", "Type new title to save new movie");
     } else if(!this.state.description) {
-      Alert.alert("ERROR", "Type new description to save new movie");
+      console.log("ERROR", "Type new description to save new movie");
     } else {
-      fetch(`http://172.30.44.149:8000/api/movies/`, {
+      console.log(this.state.token);
+      fetch(`http://172.30.1.11:8000/api/movies/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ export default class MovieAdd extends Component {
         })
       })
       .then( response => response.json())
-      .then( result => Alert.alert("ADD", result.message))
+      .then( result => console.log("ADD:", result.message))
       .catch( error => console.log(error));
       
       this.navigation.goBack();
@@ -51,14 +52,12 @@ export default class MovieAdd extends Component {
           style={styles.textinput_type1}
           placeholder='new movie title'
           onChangeText={text => this.setState({title: text})}
-          value={this.state.title}
         />
         <Text>Add New Movie Description</Text>
         <TextInput 
           style={styles.textinput_type1}
           placeholder='new movie description'
           onChangeText={text => this.setState({description: text})}
-          value={this.state.description}
         />
         <Button title="Save" onPress={() => this.saveClicked()}/>
       </View>

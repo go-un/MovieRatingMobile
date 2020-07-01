@@ -6,16 +6,18 @@ import MovieList from './components/list';
 import MovieDetail from './components/detail';
 import MovieEdit from './components/edit';
 import MovieAdd from './components/add';
+import Auth from './components/auth';
 
 const AppNavigator = createStackNavigator(
   {
     List: MovieList,
     Details: MovieDetail,
     Edit: MovieEdit,
-    Add: MovieAdd
+    Add: MovieAdd,
+    Auth: Auth
   },
   {
-    initialRouteName: 'List',
+    initialRouteName: 'Auth',
   }
 );
 

@@ -9,7 +9,7 @@ export default class MovieEdit extends Component {
     this.state = {
       title: this.movie.title,
       description: this.movie.description,
-      token: '47ec21484323984a72b5d949c0981db5afa713d8'
+      token: props.navigation.getParam('token', null)
     }
   }
 
@@ -33,7 +33,7 @@ export default class MovieEdit extends Component {
   }
     
   saveClicked = () => {
-    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/${this.movie.id}/`, {
+    fetch(`http://172.30.1.11:8000/api/movies/${this.movie.id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -45,14 +45,14 @@ export default class MovieEdit extends Component {
       })
     })
     .then( response => response.json())
-    .then( result => Alert.alert("EDIT", result.message))
+    .then( result => console.log("EDIT:", result.message))
     .catch( error => console.log(error));
     
     this.navigation.goBack();
   }
 
   removeClicked = movie => {
-    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/${movie.id}/`, {
+    fetch(`http://172.30.1.11:8000/api/movies/${movie.id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -73,16 +73,14 @@ export default class MovieEdit extends Component {
         <Text>Edit Moive Title</Text>
         <TextInput 
           style={styles.textinput_type1}
-          placeholder='edit title'
+          placeholder={this.state.title}
           onChangeText={text => this.setState({title: text})}
-          value={this.state.title}
         />
         <Text>Edit Movie Description</Text>
         <TextInput 
           style={styles.textinput_type1}
-          placeholder='edit movie description'
+          placeholder={this.state.description}
           onChangeText={text => this.setState({description: text})}
-          value={this.state.description}
         />
         <Button title="Save" onPress={() => this.saveClicked()}/>
       </View>

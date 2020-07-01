@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { FlatList, Text, View, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { FlatList, Text, View, StyleSheet, TouchableOpacity, Button, AsyncStorage } from 'react-native';
 
 export default class MovieList extends Component {
   constructor(props){
@@ -7,7 +7,7 @@ export default class MovieList extends Component {
     this.navigation = props.navigation;
     this.state = {
       movies: [],
-      token: '47ec21484323984a72b5d949c0981db5afa713d8'
+      token: ''
     }
   }
 
@@ -16,15 +16,30 @@ export default class MovieList extends Component {
       title: 'Moive List',
       headerRight: () => (
         <Button
-          onPress={() => navigation.navigate('Add')}
+          onPress={() => navigation.navigate('Add', {token: navigation.state.params.token})}
           title="New"
         />
       ),
     };
   };
 
-  componentDidMount() {
-    fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/`, {
+  getToken = async () => {
+    const token = await AsyncStorage.getItem('MR_Token');
+    
+    if(token !== 'undefined') {
+      this.setState({token: token});
+      this.getMovies();
+      this.props.navigation.setParams({
+        token: this.state.token
+      });
+    } else {
+      alert('Log in first!');
+      this.navigation.navigate('Auth');
+    }
+  }
+
+  getMovies = () => {
+    fetch(`http://172.30.1.11:8000/api/movies/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${this.state.token}`
@@ -35,6 +50,10 @@ export default class MovieList extends Component {
     .catch( error => console.log(error));
   }
 
+  componentDidMount() {
+    this.getToken();
+  }
+
   render() {
     return (
       <View style={styles.movie_list_box}>
@@ -43,7 +62,7 @@ export default class MovieList extends Component {
           style={styles.movie_list}
           renderItem={({item}) => (
             <View style={styles.movie_list_item}>
-              <TouchableOpacity onPress={() => this.navigation.navigate("Details", {movie: item, title: item.title})}>
+              <TouchableOpacity onPress={() => this.navigation.navigate("Details", {movie: item, title: item.title, token: this.state.token})}>
                 <Text style={styles.text_title_type1}>{item.title}</Text>
               </TouchableOpacity>
             </View>

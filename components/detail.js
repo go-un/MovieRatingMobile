@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faStar, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 export default class MovieDetail extends Component {
   constructor(props){
@@ -10,7 +10,7 @@ export default class MovieDetail extends Component {
     this.state = {
       movie: props.navigation.getParam('movie', null),
       highlight: 0,
-      token: '47ec21484323984a72b5d949c0981db5afa713d8'
+      token: props.navigation.getParam('token', null)
     }
   }
 
@@ -19,7 +19,7 @@ export default class MovieDetail extends Component {
       title: navigation.getParam('title', 'Movie Detail'),
       headerRight: () => (
         <Button
-          onPress={() => navigation.navigate('Edit', {movie: navigation.getParam('movie', null)})}
+          onPress={() => navigation.navigate('Edit', {movie: navigation.getParam('movie', null), token: navigation.getParam('token', null)})}
           title="Edit"
         />
       ),
@@ -34,7 +34,7 @@ export default class MovieDetail extends Component {
     if(rate === 0) {
       Alert.alert("ERROR", 'rate it first! click star icon!');
     } else {
-      fetch(`${process.env.REACT_NATIVE_API_URL}/api/movies/${this.state.movie.id}/rate_movie/`, {
+      fetch(`http://172.30.1.11:8000/api/movies/${this.state.movie.id}/rate_movie/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export default class MovieDetail extends Component {
       })
       .then( response => response.json())
       .then( result => {
-        Alert.alert("RATE", result.message);
+        console.log("RATE:", result.message);
         this.setState({highlight: 0});
       })
       .catch( error => Alert.alert("ERROR", error));
