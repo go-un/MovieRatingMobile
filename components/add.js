@@ -25,7 +25,7 @@ export default class MovieAdd extends Component {
       console.log("ERROR", "Type new description to save new movie");
     } else {
       console.log(this.state.token);
-      fetch(`http://172.30.1.11:8000/api/movies/`, {
+      fetch(`https://movie-rater-apps.herokuapp.com/api/movies/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

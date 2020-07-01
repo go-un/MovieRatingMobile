@@ -34,7 +34,7 @@ export default class MovieDetail extends Component {
     if(rate === 0) {
       Alert.alert("ERROR", 'rate it first! click star icon!');
     } else {
-      fetch(`http://172.30.1.11:8000/api/movies/${this.state.movie.id}/rate_movie/`, {
+      fetch(`https://movie-rater-apps.herokuapp.com/api/movies/${this.state.movie.id}/rate_movie/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -39,7 +39,7 @@ export default class MovieList extends Component {
   }
 
   getMovies = () => {
-    fetch(`http://172.30.1.11:8000/api/movies/`, {
+    fetch(`https://movie-rater-apps.herokuapp.com/api/movies/`, {
       method: 'GET',
       headers: {
         'Authorization': `Token ${this.state.token}`

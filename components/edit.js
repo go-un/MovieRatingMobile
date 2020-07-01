@@ -33,7 +33,7 @@ export default class MovieEdit extends Component {
   }
     
   saveClicked = () => {
-    fetch(`http://172.30.1.11:8000/api/movies/${this.movie.id}/`, {
+    fetch(`https://movie-rater-apps.herokuapp.com/api/movies/${this.movie.id}/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export default class MovieEdit extends Component {
   }
 
   removeClicked = movie => {
-    fetch(`http://172.30.1.11:8000/api/movies/${movie.id}/`, {
+    fetch(`https://movie-rater-apps.herokuapp.com/api/movies/${movie.id}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

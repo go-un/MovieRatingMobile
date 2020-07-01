@@ -23,7 +23,7 @@ export default class Auth extends Component {
   }
     
   loginClicked = () => {
-    fetch(`http://172.30.1.11:8000/auth/`, {
+    fetch(`https://movie-rater-apps.herokuapp.com/auth/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export default class Auth extends Component {
   }
 
   registerClicked = () => {
-    fetch(`http://172.30.1.11:8000/api/users/`, {
+    fetch(`https://movie-rater-apps.herokuapp.com/api/users/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
